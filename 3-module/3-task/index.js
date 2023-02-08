@@ -1,12 +1,4 @@
 function camelize(str) {
-  let str2 = "";
-  for(let i = 0; i < str.length; i++){
-      if(str[i] === "-"){
-        i++;
-        str2 += str.slice(i, (i + 1)).toUpperCase();
-      }else{
-        str2 += str.slice(i , (i + 1));
-      }
-    }
-  return str2;
+  str = str.split('-');
+  return str.map((item, index) => !index ? item : item[0].toUpperCase() + item.slice(1)).join("");
 }
