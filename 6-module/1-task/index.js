@@ -16,13 +16,12 @@ export default class UserTable {
   rows = [];
   constructor(rows) {
     this.rows = rows || this.rows;
-    this.elem = document.createElement('table');
-    this.object();
-    this.addButton();
+    this.elem = document.createElement('table') || null;
+    this.render();
   }
 
-  object() {
-    let templates = `
+  render() {
+    this.elem.innerHTML = `
       <thead>
         <tr>
           <th>Имя</th>
@@ -41,12 +40,15 @@ export default class UserTable {
         <td>${elem.city}</td>
         <td><button>X</button></td>
         </tr>`).join('')}
-  </tbody>`
-  this.elem.innerHTML = templates;
-  }
-  addButton(){
-    for (const button of this.elem.querySelectorAll("button"))
-      button.addEventListener('click', (event) =>
-      event.target.closest("tr").remove())
+  </tbody>`;
+    
+    
+    
+    this.elem.addEventListener('click', (event) => {
+      if (event.target.tagName === "BUTTON") {
+        event.target.closest("tr").remove()
+      }
+    });
   }
 }
+
