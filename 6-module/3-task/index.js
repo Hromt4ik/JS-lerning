@@ -2,9 +2,7 @@ import createElement from '../../assets/lib/create-element.js';
 export default class Carousel {
     constructor(slides) {
       this.slides = slides;
-      this.elem = this.render();
-
-      this.elem.addEventListener('click', (event) => { this.onClick(event)});
+      this.render();
 
       const carouselArrowRight = this.elem.querySelector(".carousel__arrow_right");
       const carouselArrowLeft = this.elem.querySelector(".carousel__arrow_left");
@@ -36,16 +34,9 @@ export default class Carousel {
 
     }
 
-    onClick(event) {
-      if (event.target.closest('.carousel__button ')) {
-      this.elem.dispatchEvent(new CustomEvent("product-add", { 
-        detail: this.slides[this.currentSlide].id, 
-        bubbles: true 
-      }))}
-    }
 
     render() {
-      return createElement(` 
+      this.elem = createElement(` 
       <div class="carousel">
       <!--Кнопки переключения-->
         <div class="carousel__arrow carousel__arrow_right">
@@ -68,6 +59,16 @@ export default class Carousel {
           </div>`).join('')}
         </div>
       </div>`);
+
+      this.elem.addEventListener('click', (event) => {
+        if (event.target.closest('.carousel__button ')) {
+          this.elem.dispatchEvent(new CustomEvent("product-add", { 
+            detail: this.slides[this.currentSlide].id, 
+            bubbles: true 
+          }))
+        }
+      });
+
     }
 
   }
