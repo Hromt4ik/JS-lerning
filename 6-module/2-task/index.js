@@ -1,25 +1,11 @@
 import createElement from '../../assets/lib/create-element.js';
 export default class ProductCard {
   constructor(product) {
-    this.elem = this.render(product);
-    this.elem.addEventListener("click", (event) => {
-      if (event.target.closest(".card__button")) {
-        this.onClick()
-      }
-    });
-    this.id = product.id;
+    this.render(product) || null;
   }
-
-  onClick(){
-    this.elem.dispatchEvent(new CustomEvent("product-add", {
-      detail: this.id,
-      bubbles: true
-    }));
-  }
-
 
   render(product) {
-    return createElement(`
+    this.elem = createElement(`
     <div class="card" id ="${product.id}">
       <div class="card__top">
         <img src="../../assets/images/products/${product.image}" class="card__image" alt="product">
@@ -33,6 +19,14 @@ export default class ProductCard {
       </div>
     </div>
 `);
+    this.elem.addEventListener("click", (event) => {
+      if (event.target.closest(".card__button")) {
+        this.elem.dispatchEvent(new CustomEvent("product-add", {
+          detail: product.id,
+          bubbles: true
+        }));
+      }
+    });
   }
 
 }
